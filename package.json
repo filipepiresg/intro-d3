@@ -1,0 +1,24 @@
+{
+  "name": "intro-d3",
+  "version": "1.0.0",
+  "description": "Introdução a D3.js versão 4 para alguém que talvez nunca tenha programado em javascript.",
+  "main": "index.js",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "live":"live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filipepiresg/intro-d3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/filipepiresg/intro-d3/issues"
+  },
+  "homepage": "https://github.com/filipepiresg/intro-d3#readme"
+}
