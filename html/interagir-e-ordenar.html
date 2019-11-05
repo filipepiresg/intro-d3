@@ -155,6 +155,11 @@
             d3.selectAll("text")
               .style("font-weight",
                       p => p.nome_curto === d.nome_curto ? "bold" : "normal");
+            d3.selectAll("rect")
+              .style("stroke-width",
+                      p => p.nome_curto === d.nome_curto ? "3" : "0")
+              .style("stroke",
+                      p => p.nome_curto === d.nome_curto ? "#525252" : "transparent");
 
             d3.select("#tooltip") // reparou que tem uma div escondida no html?
   						.style("left", (d3.event.pageX - 50) + "px")
@@ -171,6 +176,8 @@
           function mouseSaiu(d){
             d3.selectAll("text")
               .style("font-weight", "normal");
+            d3.selectAll("rect")
+              .style("stroke", "transparent");
 
             // não precisamos mais de tooltip
             d3.select("#tooltip").classed("hidden", true);
@@ -191,19 +198,25 @@
           function mudaDimensaoEReordena(dimensao) {
             dimensaoSelecionada = dimensao
             // necessario para reordenar as barras/nomes
-            // var nomesOrdenados = dados.sort((a, b) => d3.ascending(a[dimensao], b[dimensao]))
-            //                           .map(d => d.nome_curto)
-            // y.domain(nomesOrdenados)
+            var nomesOrdenados = dados.sort((a, b) => d3.ascending(a[dimensao], b[dimensao]))
+                                      .map(d => d.nome_curto)
+            y.domain(nomesOrdenados)
 
             var maxValue = d3.max(dados, d => parseFloat(d[dimensao]))
 
             escalaLargura = escalaLargura.domain([0, maxValue])
 
             grafico.selectAll("rect")
-              //.sort((a, b) => b[dimensao] - a[dimensao]) // dica para a hora de reordenar os retângulos
-              .transition().duration(300).delay((d,i) => i * 20)
+              .sort((a, b) => b[dimensao] - a[dimensao]) // dica para a hora de reordenar os retângulos
+              .transition().duration(600).delay((d,i) => i * 50)
               .attr("width", d => escalaLargura(d[dimensao]))
-
+              .attr("y", (d) => y(d.nome_curto))
+              
+            grafico.selectAll("text")
+              .sort((a, b) => b[dimensao] - a[dimensao]) // dica para a hora de reordenar os retângulos
+              .transition().duration(600).delay((d,i) => i * 50)
+              .attr("y", d => y(d.nome_curto) + y.bandwidth()/2 + 2)
+              .attr("width", d => escalaLargura(d[dimensao]))
           }
         }
       }
